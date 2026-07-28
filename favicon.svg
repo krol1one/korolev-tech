@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Korolev Tech">
+  <rect width="64" height="64" rx="14" fill="#0b0f14"/>
+  <path d="M15 17h7v13l13-13h9L29 32l16 15h-10L22 34v13h-7V17z" fill="#f4f7fb"/>
+  <path d="M43 17h7v30h-7z" fill="#2dd4bf"/>
+  <circle cx="47" cy="14" r="4" fill="#2dd4bf"/>
+</svg>
