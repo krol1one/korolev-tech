@@ -4,6 +4,19 @@ const CONTACTS = {
   github: "https://github.com/krol1one"
 };
 
+const API_CONFIG = {
+  leadEndpoint: "CLOUDFLARE_WORKER_URL"
+};
+
+const FORM_LIMITS = {
+  name: 100,
+  contact: 200,
+  description: 3000,
+  minDescription: 20,
+  minFillTimeMs: 3000,
+  successCooldownMs: 10000
+};
+
 const CASES_FALLBACK = [
   {
     id: "getcourse-access-questionnaires",
@@ -111,6 +124,7 @@ const selectors = {
   modalContent: document.querySelector("[data-modal-content]"),
   toTop: document.querySelector("[data-to-top]"),
   form: document.querySelector("[data-contact-form]"),
+  submitButton: document.querySelector("[data-submit-button]"),
   formStatus: document.querySelector("[data-form-status]")
 };
 
@@ -344,53 +358,105 @@ function modalSection(title, body) {
 }
 
 function setupForm() {
+  const formStartedAt = Date.now();
+  let isSubmitting = false;
+  let cooldownUntil = 0;
+  const defaultButtonText = selectors.submitButton.textContent;
+
   selectors.form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const formData = new FormData(selectors.form);
-    const text = [
-      "Здравствуйте! Хочу обсудить проект.",
-      "",
-      `Имя: ${formData.get("name")}`,
-      `Способ связи: ${formData.get("contact")}`,
-      "",
-      "Задача:",
-      formData.get("message")
-    ].join("\n");
+    if (isSubmitting) return;
 
-    const copied = await copyMessage(text);
-
-    if (copied) {
-      selectors.formStatus.textContent = "Описание задачи скопировано. Сейчас откроется Telegram — вставьте сообщение в чат.";
-      window.open(CONTACTS.telegram, "_blank", "noopener,noreferrer");
+    const now = Date.now();
+    if (now < cooldownUntil) {
+      setFormStatus("Заявка уже отправлена. Если нужно добавить детали, напишите мне напрямую в Telegram: @KROL1ONE", "success");
       return;
     }
 
-    selectors.formStatus.innerHTML = `Не удалось скопировать сообщение автоматически. Скопируйте текст вручную и отправьте его в Telegram: <br><textarea class="copy-fallback" readonly>${escapeHtml(text)}</textarea>`;
-    window.open(CONTACTS.telegram, "_blank", "noopener,noreferrer");
+    const formData = new FormData(selectors.form);
+    const payload = {
+      name: normalizeField(formData.get("name")),
+      contact: normalizeField(formData.get("contact")),
+      description: normalizeField(formData.get("description")),
+      website: normalizeField(formData.get("website"))
+    };
+
+    const validationError = validateLead(payload, Date.now() - formStartedAt);
+    if (validationError) {
+      setFormStatus(validationError, "error");
+      return;
+    }
+
+    if (isPlaceholder(API_CONFIG.leadEndpoint)) {
+      setFormStatus("Форма почти готова: добавьте URL Cloudflare Worker в js/app.js. Пока можно написать напрямую в Telegram: @KROL1ONE", "error");
+      return;
+    }
+
+    isSubmitting = true;
+    setFormBusy(true, "Отправляем…");
+    setFormStatus("", "");
+
+    try {
+      const response = await fetch(API_CONFIG.leadEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error("Lead endpoint returned an error");
+      }
+
+      selectors.form.reset();
+      cooldownUntil = Date.now() + FORM_LIMITS.successCooldownMs;
+      setFormStatus("Заявка отправлена. Я свяжусь с вами в ближайшее время.", "success");
+    } catch (error) {
+      setFormStatus("Не удалось отправить заявку. Напишите мне напрямую в Telegram: @KROL1ONE", "error");
+    } finally {
+      isSubmitting = false;
+      setFormBusy(false, defaultButtonText);
+    }
   });
 }
 
-async function copyMessage(text) {
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(text);
-      return true;
-    }
+function normalizeField(value) {
+  return String(value || "").trim();
+}
 
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    textarea.setAttribute("readonly", "");
-    textarea.style.position = "fixed";
-    textarea.style.left = "-9999px";
-    document.body.appendChild(textarea);
-    textarea.select();
-    const copied = document.execCommand("copy");
-    textarea.remove();
-    return copied;
-  } catch (error) {
-    console.info("Буфер обмена недоступен, показан резервный вариант.");
-    return false;
+function validateLead(payload, fillTimeMs) {
+  if (payload.website) return null;
+  if (!payload.name || !payload.contact || !payload.description) {
+    return "Заполните имя, способ связи и описание задачи.";
   }
+  if (payload.name.length > FORM_LIMITS.name) {
+    return "Имя слишком длинное. Укажите до 100 символов.";
+  }
+  if (payload.contact.length > FORM_LIMITS.contact) {
+    return "Способ связи слишком длинный. Укажите до 200 символов.";
+  }
+  if (payload.description.length < FORM_LIMITS.minDescription) {
+    return "Опишите задачу чуть подробнее: минимум 20 символов.";
+  }
+  if (payload.description.length > FORM_LIMITS.description) {
+    return "Описание слишком длинное. Укажите до 3000 символов.";
+  }
+  if (fillTimeMs < FORM_LIMITS.minFillTimeMs) {
+    return "Проверьте данные и отправьте форму ещё раз через несколько секунд.";
+  }
+  return null;
+}
+
+function setFormBusy(isBusy, buttonText) {
+  selectors.submitButton.disabled = isBusy;
+  selectors.submitButton.textContent = buttonText;
+  selectors.form.classList.toggle("is-sending", isBusy);
+}
+
+function setFormStatus(message, type) {
+  selectors.formStatus.textContent = message;
+  selectors.formStatus.dataset.status = type;
 }
 
 function escapeHtml(value) {

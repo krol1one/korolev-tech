@@ -226,6 +226,7 @@ h3 {
 .process-list p,
 .case-card p,
 .placeholder-note,
+.contact-lines,
 .site-footer p {
   color: var(--muted);
   line-height: 1.68;
@@ -616,6 +617,20 @@ h3 {
   flex-direction: column;
 }
 
+.contact-lines {
+  margin: 6px 0 0;
+}
+
+.contact-lines a {
+  color: var(--text);
+  border-bottom: 1px solid rgba(45, 212, 191, 0.45);
+}
+
+.contact-lines a:hover,
+.contact-lines a:focus-visible {
+  color: var(--accent);
+}
+
 .contact-form {
   display: grid;
   gap: 15px;
@@ -646,21 +661,29 @@ h3 {
   box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.12);
 }
 
+.honeypot,
+.honeypot input {
+  display: none !important;
+}
+
+.contact-form button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
+}
+
 .form-status {
   min-height: 24px;
   margin: 0;
   color: var(--accent);
 }
 
-.copy-fallback {
-  width: 100%;
-  min-height: 150px;
-  margin-top: 10px;
-  border: 1px solid rgba(45, 212, 191, 0.45);
-  border-radius: var(--radius);
-  background: rgba(0, 0, 0, 0.22);
-  color: var(--text);
-  padding: 12px;
+.form-status[data-status="error"] {
+  color: var(--danger);
+}
+
+.form-status[data-status="success"] {
+  color: var(--accent);
 }
 
 .site-footer {

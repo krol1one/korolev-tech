@@ -5,20 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Владислав Королев — автоматизация, CRM, Telegram-боты и IT-инфраструктура</title>
     <meta name="description" content="Портфолио технического специалиста Владислава Королева. GetCourse, amoCRM, Kommo, Telegram-боты, интеграции, серверы, сети и внутренние IT-системы.">
+    <link rel="canonical" href="https://vladislavkorolev.ru/">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vladislavkorolev.ru/">
     <meta property="og:title" content="Владислав Королев — автоматизация, CRM, Telegram-боты и IT-инфраструктура">
     <meta property="og:description" content="Портфолио технического специалиста: GetCourse, CRM, Telegram-боты, интеграции, серверы, сети и внутренние IT-системы.">
     <meta property="og:locale" content="ru_RU">
     <meta name="theme-color" content="#0b0f14">
     <link rel="icon" href="./favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="./css/style.css">
-    <!-- Replace SITE_URL with the published website URL after GitHub Pages or Cloudflare Pages deployment. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
         "name": "Владислав Королев",
-        "url": "SITE_URL",
+        "url": "https://vladislavkorolev.ru",
         "email": "i@korolev-tech.ru",
         "sameAs": [
           "https://t.me/KROL1ONE"
@@ -28,7 +29,7 @@
           "name": "Владислав Королев",
           "jobTitle": "Технический специалист по автоматизации, CRM и IT-инфраструктуре",
           "email": "i@korolev-tech.ru",
-          "url": "SITE_URL",
+          "url": "https://vladislavkorolev.ru",
           "sameAs": [
             "https://t.me/KROL1ONE"
           ]
@@ -214,24 +215,30 @@
         <div class="contact-layout">
           <div class="contact-panel reveal">
             <a class="button primary" href="https://t.me/KROL1ONE" target="_blank" rel="noopener noreferrer" data-contact-link="telegram">Написать в Telegram</a>
-            <a class="button secondary" href="mailto:i@korolev-tech.ru" data-contact-link="email">Отправить email</a>
-            <p class="placeholder-note">Telegram: @KROL1ONE<br>Email: <a href="mailto:i@korolev-tech.ru" data-contact-link="email">i@korolev-tech.ru</a></p>
+            <p class="contact-lines">
+              Telegram: <a href="https://t.me/KROL1ONE" target="_blank" rel="noopener noreferrer" data-contact-link="telegram">@KROL1ONE</a><br>
+              Email: <a href="mailto:i@korolev-tech.ru" data-contact-link="email">i@korolev-tech.ru</a>
+            </p>
           </div>
-          <form class="contact-form reveal" data-contact-form>
+          <form class="contact-form reveal" data-contact-form novalidate>
             <label>
               <span>Имя</span>
-              <input type="text" name="name" autocomplete="name" required placeholder="Как к вам обращаться">
+              <input type="text" name="name" autocomplete="name" required maxlength="100" placeholder="Как к вам обращаться">
             </label>
             <label>
               <span>Способ связи</span>
-              <input type="text" name="contact" autocomplete="email" required placeholder="Telegram, email или телефон">
+              <input type="text" name="contact" autocomplete="email" required maxlength="200" placeholder="Telegram, email или телефон">
             </label>
             <label>
               <span>Описание задачи</span>
-              <textarea name="message" rows="5" required placeholder="Что нужно настроить, автоматизировать или связать"></textarea>
+              <textarea name="description" rows="5" required minlength="20" maxlength="3000" placeholder="Что нужно настроить, автоматизировать или связать"></textarea>
             </label>
-            <button class="button primary" type="submit">Сформировать сообщение</button>
-            <p class="form-status" role="status" data-form-status></p>
+            <label class="honeypot" aria-hidden="true" tabindex="-1">
+              <span>Website</span>
+              <input type="text" name="website" autocomplete="off" tabindex="-1">
+            </label>
+            <button class="button primary" type="submit" data-submit-button>Отправить заявку</button>
+            <p class="form-status" role="status" aria-live="polite" data-form-status></p>
           </form>
         </div>
       </section>
