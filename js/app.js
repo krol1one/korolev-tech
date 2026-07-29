@@ -297,7 +297,10 @@ function renderCases() {
         ${item.stack.slice(0, 4).map((tag) => `<span class="case-tag">${escapeHtml(tag)}</span>`).join("")}
       </div>
       <p class="case-result"><strong>Результат:</strong> ${escapeHtml(item.result)}</p>
-      <button class="button secondary" type="button" data-case-id="${escapeHtml(item.id)}">Подробнее</button>
+      <div class="case-actions">
+        <button class="button secondary" type="button" data-case-id="${escapeHtml(item.id)}">Подробнее</button>
+        ${item.projectUrl ? `<a class="button primary" href="${escapeAttribute(item.projectUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.projectLabel || "Открыть проект")}</a>` : ""}
+      </div>
     </article>
   `).join("");
 
@@ -334,7 +337,10 @@ function openModal(caseId) {
     ${modalSection("Техническое решение", `<p>${escapeHtml(item.solution)}</p>`)}
     ${modalSection("Результат", `<p>${escapeHtml(item.result)}</p>`)}
     ${modalSection("Стек", `<div class="case-tags">${item.stack.map((tag) => `<span class="case-tag">${escapeHtml(tag)}</span>`).join("")}</div>`)}
-    <a class="button primary" href="${escapeAttribute(CONTACTS.telegram)}" target="_blank" rel="noopener noreferrer" data-contact-link="telegram">Связаться</a>
+    <div class="case-actions modal-actions">
+      ${item.projectUrl ? `<a class="button primary" href="${escapeAttribute(item.projectUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.projectLabel || "Открыть проект")}</a>` : ""}
+      <a class="button secondary" href="${escapeAttribute(CONTACTS.telegram)}" target="_blank" rel="noopener noreferrer" data-contact-link="telegram">Связаться</a>
+    </div>
   `;
   selectors.modalContent.querySelectorAll("[data-contact-link]").forEach((link) => applyContactLink(link));
 
