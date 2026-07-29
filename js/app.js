@@ -313,7 +313,7 @@ async function loadCases() {
   }
 
   try {
-    const response = await fetch("./data/cases.json?v=20260729-cases", { cache: "no-store" });
+    const response = await fetch("./data/cases.json?v=20260729-bot-buttons", { cache: "no-store" });
     if (!response.ok) throw new Error("Cases JSON is unavailable");
     state.cases = await response.json();
   } catch (error) {
