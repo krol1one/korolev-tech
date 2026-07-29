@@ -269,8 +269,8 @@ const API_CONFIG = {
 - Canonical и Open Graph указывают на `https://vladislavkorolev.ru/`.
 - JSON-LD содержит `https://vladislavkorolev.ru`.
 - Временный placeholder адреса сайта отсутствует.
-- Старый GitHub Pages URL отсутствует в SEO.
-- Telegram token и chat id отсутствуют в репозитории.
+- Старый GitHub Pages URL отсутствует в SEO
+- Telegram token и chat id отсутствуют в репозитории
 - Форма использует Worker endpoint из `API_CONFIG.leadEndpoint`.
 - Honeypot-поле скрыто.
 - Валидация работает на frontend и Worker.
