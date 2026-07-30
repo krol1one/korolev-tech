@@ -5,7 +5,9 @@ const CONTACTS = {
 };
 
 const API_CONFIG = {
-  leadEndpoint: "CLOUDFLARE_WORKER_URL"
+  leadEndpoint: window.location.protocol === "https:"
+    ? "https://vladislavkorolev.ru/lead"
+    : "http://172.23.210.116:8787/lead"
 };
 
 const FORM_LIMITS = {
