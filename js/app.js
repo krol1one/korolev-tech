@@ -5,9 +5,7 @@ const CONTACTS = {
 };
 
 const API_CONFIG = {
-  leadEndpoint: window.location.protocol === "https:"
-    ? "https://vladislavkorolev.ru/lead"
-    : "http://172.23.210.116:8787/lead"
+  leadEndpoint: "https://subsection-aud-firewall-bedford.trycloudflare.com/lead"
 };
 
 const FORM_LIMITS = {
