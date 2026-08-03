@@ -222,6 +222,8 @@ h3 {
 .hero-text,
 .section-heading p,
 .about-text p,
+.partner-card p,
+.partner-proof p,
 .service-card p,
 .process-list p,
 .case-card p,
@@ -466,6 +468,89 @@ h3 {
 .advantages span {
   padding: 13px 14px;
   border-radius: var(--radius);
+}
+
+.partner-section {
+  padding-top: 18px;
+}
+
+.partner-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.partner-proof,
+.partner-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.16);
+}
+
+.partner-proof {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(260px, 1.15fr);
+  gap: 20px;
+  padding: 22px;
+  overflow: hidden;
+}
+
+.partner-proof-label {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 14px;
+  padding: 7px 10px;
+  border: 1px solid rgba(45, 212, 191, 0.28);
+  border-radius: var(--radius);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.partner-proof h3,
+.partner-card h3 {
+  margin-bottom: 12px;
+}
+
+.partner-proof img {
+  width: 100%;
+  height: 100%;
+  min-height: 250px;
+  max-height: 360px;
+  object-fit: contain;
+  object-position: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  background: rgba(5, 12, 18, 0.78);
+}
+
+.partner-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 22px;
+}
+
+.partner-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.partner-list li {
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #d8e1eb;
+  font-size: 14px;
+  font-weight: 800;
 }
 
 .service-grid,
@@ -869,6 +954,8 @@ h3 {
 
   .hero,
   .split,
+  .partner-layout,
+  .partner-proof,
   .contact-layout {
     grid-template-columns: 1fr;
   }
@@ -933,6 +1020,15 @@ h3 {
   .service-grid,
   .case-grid {
     grid-template-columns: 1fr;
+  }
+
+  .partner-proof {
+    padding: 18px;
+  }
+
+  .partner-proof img {
+    min-height: 190px;
+    max-height: 240px;
   }
 
   .hero-actions .button,
