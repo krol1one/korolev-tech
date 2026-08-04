@@ -5,14 +5,13 @@ const CONTACTS = {
 };
 
 const API_CONFIG = {
-  leadEndpoint: "https://subsection-aud-firewall-bedford.trycloudflare.com/lead"
+  leadEndpoint: ""
 };
 
 const FORM_LIMITS = {
   name: 100,
   contact: 200,
   description: 3000,
-  minDescription: 20,
   minFillTimeMs: 3000,
   successCooldownMs: 10000
 };
@@ -722,7 +721,9 @@ function setupForm() {
     }
 
     if (isPlaceholder(API_CONFIG.leadEndpoint)) {
-      setFormStatus("Форма почти готова: добавьте URL Cloudflare Worker в js/app.js. Пока можно написать напрямую в Telegram: @KROL1ONE", "error");
+      await sendLeadViaTelegramFallback(payload);
+      selectors.form.reset();
+      cooldownUntil = Date.now() + FORM_LIMITS.successCooldownMs;
       return;
     }
 
@@ -747,7 +748,9 @@ function setupForm() {
       cooldownUntil = Date.now() + FORM_LIMITS.successCooldownMs;
       setFormStatus("Заявка отправлена. Я свяжусь с вами в ближайшее время.", "success");
     } catch (error) {
-      setFormStatus("Не удалось отправить заявку. Напишите мне напрямую в Telegram: @KROL1ONE", "error");
+      await sendLeadViaTelegramFallback(payload);
+      selectors.form.reset();
+      cooldownUntil = Date.now() + FORM_LIMITS.successCooldownMs;
     } finally {
       isSubmitting = false;
       setFormBusy(false, defaultButtonText);
@@ -770,9 +773,6 @@ function validateLead(payload, fillTimeMs) {
   if (payload.contact.length > FORM_LIMITS.contact) {
     return "Способ связи слишком длинный. Укажите до 200 символов.";
   }
-  if (payload.description.length < FORM_LIMITS.minDescription) {
-    return "Опишите задачу чуть подробнее: минимум 20 символов.";
-  }
   if (payload.description.length > FORM_LIMITS.description) {
     return "Описание слишком длинное. Укажите до 3000 символов.";
   }
@@ -780,6 +780,87 @@ function validateLead(payload, fillTimeMs) {
     return "Проверьте данные и отправьте форму ещё раз через несколько секунд.";
   }
   return null;
+}
+
+async function sendLeadViaTelegramFallback(payload) {
+  const message = buildLeadMessage(payload);
+  const copied = await copyText(message);
+  const opened = openTelegramContact();
+
+  if (copied && opened) {
+    setFormStatus("Заявка подготовлена и скопирована. Telegram открыт — вставьте сообщение в чат.", "success");
+  } else if (copied) {
+    setFormStatus("Заявка подготовлена и скопирована. Нажмите «Написать в Telegram» и вставьте сообщение в чат.", "success");
+  } else if (opened) {
+    setFormStatus("Telegram открыт. Отправьте описание задачи вручную.", "success");
+  } else {
+    setFormStatus("Нажмите «Написать в Telegram» и отправьте описание задачи вручную.", "success");
+  }
+}
+
+function buildLeadMessage(payload) {
+  const time = new Date().toLocaleString("ru-RU", {
+    timeZone: "Europe/Moscow",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  });
+
+  return [
+    "Новая заявка с сайта",
+    "",
+    "Имя:",
+    payload.name,
+    "",
+    "Связь:",
+    payload.contact,
+    "",
+    "Задача:",
+    payload.description,
+    "",
+    "Источник:",
+    window.location.hostname || "vladislavkorolev.ru",
+    "",
+    "Время:",
+    time
+  ].join("\n");
+}
+
+async function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (error) {
+      // Fall through to the textarea fallback.
+    }
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  textarea.style.top = "0";
+  document.body.appendChild(textarea);
+  textarea.select();
+
+  try {
+    return document.execCommand("copy");
+  } catch (error) {
+    return false;
+  } finally {
+    textarea.remove();
+  }
+}
+
+function openTelegramContact() {
+  const opened = window.open(CONTACTS.telegram, "_blank", "noopener,noreferrer");
+  return Boolean(opened);
 }
 
 function setFormBusy(isBusy, buttonText) {
