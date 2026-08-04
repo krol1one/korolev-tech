@@ -9,7 +9,6 @@ const LIMITS = {
   name: 100,
   contact: 200,
   description: 3000,
-  minDescription: 20,
   maxBodyBytes: 12000
 };
 
@@ -133,9 +132,6 @@ function validateLead(lead) {
   }
   if (lead.contact.length > LIMITS.contact) {
     return "Contact is too long";
-  }
-  if (lead.description.length < LIMITS.minDescription) {
-    return "Description is too short";
   }
   if (lead.description.length > LIMITS.description) {
     return "Description is too long";

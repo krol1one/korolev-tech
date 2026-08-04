@@ -5,7 +5,7 @@ const CONTACTS = {
 };
 
 const API_CONFIG = {
-  leadEndpoint: ""
+  leadEndpoint: "https://pasta-sustained-number-requires.trycloudflare.com/lead"
 };
 
 const FORM_LIMITS = {
