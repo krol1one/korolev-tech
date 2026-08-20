@@ -432,6 +432,36 @@ const CASES_FALLBACK = [
     "projectLabel": "Открыть бота"
   },
   {
+    "id": "salebot-yandex-metrika-offline-goals",
+    "title": "Передача целей из Telegram-бота в Яндекс Метрику",
+    "category": "Автоматизация",
+    "summary": "Настроена передача целевых действий из SaleBot в Яндекс Метрику: запуск Telegram-бота и получение номера телефона пользователя.",
+    "task": "Связать визит пользователя на мини-лендинг с действиями внутри Telegram-бота и передавать в Яндекс Метрику две цели: запуск бота и получение телефона.",
+    "done": [
+      "Создан тестовый мини-лендинг в SaleBot.",
+      "Подключён счётчик Яндекс Метрики.",
+      "При открытии страницы получался ClientID посетителя из Метрики.",
+      "ClientID автоматически подставлялся в deep-link Telegram-бота в формате t.me/bot?start=ClientID.",
+      "После перехода пользователя в Telegram значение ClientID сохранялось в SaleBot.",
+      "Настроена обработка запуска бота через start-параметр.",
+      "ClientID сохранялся в переменную клиента.",
+      "Запрос номера телефона реализован через системную кнопку Telegram.",
+      "После запуска бота отправлялась offline-конверсия bot_start.",
+      "После получения телефона отправлялась offline-конверсия phone_received."
+    ],
+    "solution": "На мини-лендинге SaleBot JavaScript получает ClientID из Яндекс Метрики и добавляет его в deep-link Telegram-бота. После перехода в Telegram SaleBot сохраняет ClientID в карточке клиента, а сценарий бота отправляет offline-конверсии в Метрику в нужные моменты: при старте и после получения номера телефона.",
+    "result": "Обе цели успешно передаются из SaleBot в Яндекс Метрику и связываются с первоначальным визитом пользователя. В отчёте Метрики отображаются ClientID, название цели, время конверсии и статус привязки к визиту для целей «Запуск бота» и «Оставил телефон».",
+    "stack": [
+      "SaleBot",
+      "Telegram Bot",
+      "Яндекс Метрика",
+      "JavaScript",
+      "deep-link",
+      "ClientID",
+      "офлайн-конверсии"
+    ]
+  },
+  {
     "id": "portfolio-minisite-github-domain",
     "title": "Минисайт портфолио с доменом на GitHub Pages",
     "category": "Разработка",
@@ -509,7 +539,7 @@ async function loadCases() {
   }
 
   try {
-    const response = await fetch("./data/cases.json?v=20260820-transcription-bot", { cache: "no-store" });
+    const response = await fetch("./data/cases.json?v=20260820-metrika-goals", { cache: "no-store" });
     if (!response.ok) throw new Error("Cases JSON is unavailable");
     state.cases = await response.json();
   } catch (error) {
