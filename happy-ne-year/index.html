@@ -7,8 +7,8 @@
   <meta name="description" content="Небольшая новогодняя ёлка с фильмами на каждый уютный вечер. Выбери шар и открой фильм.">
   <title>Кино под ёлкой — новогодние фильмы</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=1">
-  <script src="app.js?v=1" defer></script>
+  <link rel="stylesheet" href="styles.css?v=2">
+  <script src="app.js?v=2" defer></script>
 </head>
 <body>
   <div class="snowfield" aria-hidden="true"></div>
@@ -22,7 +22,7 @@
     <section class="intro" aria-labelledby="page-title">
       <p class="eyebrow"><span class="eyebrow-line"></span> НАШ НОВОГОДНИЙ СПИСОК <span class="eyebrow-line"></span></p>
       <h1 id="page-title">Выбери шар.<br><em>Найди фильм на вечер.</em></h1>
-      <p class="intro-copy">На этой ёлке спрятаны фильмы для зимних вечеров. Нажми на игрушку — она перевернётся и покажет, что смотреть.</p>
+      <p class="intro-copy">На этой ёлке спрятаны фильмы для зимних вечеров. Нажми на игрушку — она перевернётся и покажет кадр из фильма.</p>
     </section>
 
     <section class="tree-section" aria-label="Новогодняя ёлка с фильмами">
@@ -62,6 +62,9 @@
     </section>
   </main>
 
-  <footer>Пусть каждый вечер будет немного волшебным <span aria-hidden="true">✦</span></footer>
+  <footer>
+    <p>Пусть каждый вечер будет немного волшебным <span aria-hidden="true">✦</span></p>
+    <details class="image-credits"><summary>Источники кадров</summary><div id="image-credits"></div></details>
+  </footer>
 </body>
 </html>

@@ -8,7 +8,7 @@ const films = [
   { title: 'Семья напрокат' },
   { title: 'Привет семье' },
   { title: 'Вонка', note: 'с Тимоти Шаламе' },
-  { title: 'Красный', note: 'с Райаном Рейнольдсом' },
+  { title: 'Красное уведомление', note: 'с Райаном Рейнольдсом' },
   { title: 'Рождественская история' },
   { title: 'Эбенезер Скрудж', note: '2026' },
   { title: 'Полярный экспресс' },
@@ -48,6 +48,7 @@ films.forEach((film, index) => {
   button.style.setProperty('--ball-light', light);
   button.style.setProperty('--ball-dark', dark);
   button.style.setProperty('--ball-glow', glow);
+  button.style.setProperty('--open-x-mobile', x < 40 ? '-24%' : x > 60 ? '-76%' : '-50%');
   button.setAttribute('aria-label', `Открыть фильм: ${film.title}${film.note ? `, ${film.note}` : ''}`);
   button.setAttribute('aria-expanded', 'false');
 
@@ -60,11 +61,16 @@ films.forEach((film, index) => {
   const back = document.createElement('span');
   back.className = 'ornament-back';
   back.setAttribute('aria-hidden', 'true');
-  const label = document.createElement('small');
-  label.textContent = 'ФИЛЬМ НА ВЕЧЕР';
   const title = document.createElement('strong');
   title.textContent = film.title;
-  back.append(label, title);
+  const mirror = document.createElement('span');
+  mirror.className = 'film-mirror';
+  const image = document.createElement('img');
+  image.alt = '';
+  image.decoding = 'async';
+  image.dataset.src = `images/${String(index + 1).padStart(2, '0')}.jpg`;
+  mirror.append(image);
+  back.append(title, mirror);
   if (film.note) {
     const note = document.createElement('span');
     note.textContent = film.note;
@@ -89,6 +95,8 @@ function selectFilm(index) {
     buttons[selected].setAttribute('aria-expanded', 'false');
   }
   selected = index;
+  const image = buttons[index].querySelector('.film-mirror img');
+  if (!image.src) image.src = image.dataset.src;
   buttons[index].classList.add('is-open');
   buttons[index].setAttribute('aria-expanded', 'true');
   opened.add(index);
@@ -102,3 +110,18 @@ document.querySelector('#random-film').addEventListener('click', () => {
   selectFilm(choice);
   container.children[choice].focus({ preventScroll: true });
 });
+
+fetch('image-sources.json')
+  .then(response => response.ok ? response.json() : Promise.reject())
+  .then(sources => {
+    const list = document.querySelector('#image-credits');
+    sources.forEach(source => {
+      const link = document.createElement('a');
+      link.href = source.source;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = source.title;
+      list.append(link);
+    });
+  })
+  .catch(() => {});
