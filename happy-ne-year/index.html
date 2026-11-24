@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102c2b">
+  <meta name="description" content="Небольшая новогодняя ёлка с фильмами на каждый уютный вечер. Выбери шар и открой фильм.">
+  <title>Кино под ёлкой — новогодние фильмы</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css?v=1">
+  <script src="app.js?v=1" defer></script>
+</head>
+<body>
+  <div class="snowfield" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="home-link" href="/">На главную</a>
+    <span class="topbar-label">ЗИМНИЙ КИНОВЕЧЕР</span>
+    <span class="topbar-mark" aria-hidden="true">✳</span>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow"><span class="eyebrow-line"></span> НАШ НОВОГОДНИЙ СПИСОК <span class="eyebrow-line"></span></p>
+      <h1 id="page-title">Выбери шар.<br><em>Найди фильм на вечер.</em></h1>
+      <p class="intro-copy">На этой ёлке спрятаны фильмы для зимних вечеров. Нажми на игрушку — она перевернётся и покажет, что смотреть.</p>
+    </section>
+
+    <section class="tree-section" aria-label="Новогодняя ёлка с фильмами">
+      <div class="tree-halo" aria-hidden="true"></div>
+      <div class="tree-scene">
+        <svg class="tree-art" viewBox="0 0 720 800" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="trunk" x1="0" x2="1"><stop stop-color="#553321"/><stop offset=".5" stop-color="#906043"/><stop offset="1" stop-color="#3d291d"/></linearGradient>
+            <linearGradient id="lower" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2a6152"/><stop offset=".5" stop-color="#174338"/><stop offset="1" stop-color="#0b2c2a"/></linearGradient>
+            <linearGradient id="middle" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#35705a"/><stop offset=".55" stop-color="#1a4d3e"/><stop offset="1" stop-color="#10372f"/></linearGradient>
+            <linearGradient id="upper" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#44836a"/><stop offset=".55" stop-color="#24604c"/><stop offset="1" stop-color="#144537"/></linearGradient>
+            <filter id="soft-glow"><feGaussianBlur stdDeviation="8"/></filter>
+          </defs>
+          <ellipse cx="360" cy="756" rx="245" ry="25" fill="#071b1e" opacity=".45"/>
+          <rect x="330" y="635" width="60" height="112" rx="10" fill="url(#trunk)"/>
+          <path d="M360 260 C294 390 162 557 72 674 Q137 705 184 686 Q240 717 293 695 Q359 726 420 696 Q488 717 537 687 Q600 705 648 674 C558 557 426 390 360 260Z" fill="url(#lower)"/>
+          <path d="M360 178 C310 285 225 423 142 545 Q207 571 253 553 Q314 579 360 561 Q423 579 472 552 Q539 574 579 545 C495 423 410 285 360 178Z" fill="url(#middle)"/>
+          <path d="M360 102 C323 194 266 288 210 370 Q265 393 304 377 Q356 396 405 377 Q458 394 510 370 C454 288 397 194 360 102Z" fill="url(#upper)"/>
+          <path d="M260 347 Q360 392 459 347 M188 510 Q360 572 534 510 M110 659 Q360 737 610 659" fill="none" stroke="#6d9c74" stroke-width="6" stroke-linecap="round" opacity=".32"/>
+          <path d="M273 293 Q358 335 448 293 M204 457 Q356 514 513 457 M130 610 Q360 690 589 610" fill="none" stroke="#ebc987" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 9" opacity=".85"/>
+          <g fill="#ffd991" opacity=".95">
+            <circle cx="272" cy="294" r="4"/><circle cx="341" cy="326" r="4"/><circle cx="437" cy="296" r="4"/>
+            <circle cx="206" cy="457" r="4"/><circle cx="297" cy="495" r="4"/><circle cx="428" cy="494" r="4"/><circle cx="513" cy="457" r="4"/>
+            <circle cx="134" cy="610" r="4"/><circle cx="225" cy="648" r="4"/><circle cx="366" cy="682" r="4"/><circle cx="501" cy="647" r="4"/><circle cx="586" cy="610" r="4"/>
+          </g>
+          <g fill="#ffe8ad" opacity=".5" filter="url(#soft-glow)">
+            <circle cx="272" cy="294" r="10"/><circle cx="437" cy="296" r="10"/><circle cx="206" cy="457" r="10"/><circle cx="513" cy="457" r="10"/><circle cx="134" cy="610" r="10"/><circle cx="586" cy="610" r="10"/>
+          </g>
+        </svg>
+        <div class="tree-star" aria-hidden="true">✦</div>
+        <div id="ornaments" class="ornaments"></div>
+      </div>
+      <div class="tree-footer">
+        <p id="progress" class="progress" aria-live="polite">Открыто 0 из 15 фильмов</p>
+        <button id="random-film" class="random-button" type="button">Выбрать случайный шар</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>Пусть каждый вечер будет немного волшебным <span aria-hidden="true">✦</span></footer>
+</body>
+</html>
