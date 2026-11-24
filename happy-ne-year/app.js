@@ -1,19 +1,19 @@
 const films = [
-  { title: 'Вам письмо' },
-  { title: 'Отпуск по обмену' },
-  { title: 'Пока ты спал' },
-  { title: 'Замёрзшая из Майами' },
-  { title: 'Четыре Рождества' },
-  { title: 'Семьянин' },
-  { title: 'Семья напрокат' },
-  { title: 'Привет семье' },
-  { title: 'Вонка', note: 'с Тимоти Шаламе' },
-  { title: 'Красное уведомление', note: 'с Райаном Рейнольдсом' },
-  { title: 'Рождественская история' },
-  { title: 'Эбенезер Скрудж', note: '2026' },
-  { title: 'Полярный экспресс' },
-  { title: 'Один дома' },
-  { title: 'Плохой Санта' }
+  { title: 'Вам письмо', year: 1998 },
+  { title: 'Отпуск по обмену', year: 2006 },
+  { title: 'Пока ты спал', year: 1995 },
+  { title: 'Замёрзшая из Майами', year: 2009 },
+  { title: 'Четыре Рождества', year: 2008 },
+  { title: 'Семьянин', year: 2000 },
+  { title: 'Семья напрокат', year: 1997 },
+  { title: 'Привет семье', year: 2005 },
+  { title: 'Вонка', year: 2023, note: 'с Тимоти Шаламе' },
+  { title: 'Красное уведомление', year: 2021, note: 'с Райаном Рейнольдсом' },
+  { title: 'Рождественская история', year: 2009 },
+  { title: 'Эбенезер Скрудж', year: 2026 },
+  { title: 'Полярный экспресс', year: 2004 },
+  { title: 'Один дома', year: 1990 },
+  { title: 'Плохой Санта', year: 2003 }
 ];
 
 const positions = [
@@ -49,7 +49,7 @@ films.forEach((film, index) => {
   button.style.setProperty('--ball-dark', dark);
   button.style.setProperty('--ball-glow', glow);
   button.style.setProperty('--open-x-mobile', x < 40 ? '-24%' : x > 60 ? '-76%' : '-50%');
-  button.setAttribute('aria-label', `Открыть фильм: ${film.title}${film.note ? `, ${film.note}` : ''}`);
+  button.setAttribute('aria-label', `Открыть фильм: ${film.title}, ${film.year}${film.note ? `, ${film.note}` : ''}`);
   button.setAttribute('aria-expanded', 'false');
 
   const inner = document.createElement('span');
@@ -63,6 +63,9 @@ films.forEach((film, index) => {
   back.setAttribute('aria-hidden', 'true');
   const title = document.createElement('strong');
   title.textContent = film.title;
+  const year = document.createElement('span');
+  year.className = 'film-year';
+  year.textContent = film.year;
   const mirror = document.createElement('span');
   mirror.className = 'film-mirror';
   const image = document.createElement('img');
@@ -70,11 +73,13 @@ films.forEach((film, index) => {
   image.decoding = 'async';
   image.dataset.src = `images/${String(index + 1).padStart(2, '0')}.jpg`;
   mirror.append(image);
-  back.append(title, mirror);
+  back.append(title, year, mirror);
   if (film.note) {
     const note = document.createElement('span');
+    note.className = 'film-note';
     note.textContent = film.note;
-    back.append(note);
+    back.classList.add('has-note');
+    back.insertBefore(note, mirror);
   }
   inner.append(front, back);
   button.append(inner);

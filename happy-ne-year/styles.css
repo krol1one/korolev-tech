@@ -25,7 +25,7 @@ h1 em{color:var(--gold);font-weight:400}
 .ornament{position:absolute;left:var(--x);top:var(--y);z-index:1;width:var(--ball-size,66px);height:var(--ball-size,66px);padding:0;border:0;background:transparent;cursor:pointer;transform:translate(-50%,-50%);perspective:1000px;transition:width .38s cubic-bezier(.2,.75,.2,1),height .38s cubic-bezier(.2,.75,.2,1)}
 .ornament:hover:not(.is-open){z-index:5;filter:brightness(1.15);transform:translate(-50%,-55%) scale(1.08)}
 .ornament:focus-visible{outline:3px solid var(--gold);outline-offset:6px;border-radius:50%}
-.ornament.is-open{z-index:25;width:252px;height:272px}
+.ornament.is-open{z-index:25;width:252px;height:302px}
 .ornament-inner{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.2,.7,.2,1)}
 .ornament.is-open .ornament-inner{transform:rotateY(180deg)}
 .ornament-front,.ornament-back{position:absolute;inset:0;display:grid;place-items:center;backface-visibility:hidden;-webkit-backface-visibility:hidden}
@@ -35,10 +35,12 @@ h1 em{color:var(--gold);font-weight:400}
 .ornament-back{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:18px 14px 15px;border:3px solid #f2d08c;border-radius:45% 45% 47% 47% / 32% 32% 42% 42%;color:#173b35;background:radial-gradient(circle at 50% 10%,#fffdf1,#f5e2b6 65%,#be8646);box-shadow:inset 0 0 0 3px #fff8dd,inset 0 0 0 7px #d5a661,0 15px 32px #001719a3,0 0 24px #f4d19055;transform:rotateY(180deg)}
 .ornament-back::before{content:"";position:absolute;top:-17px;left:50%;width:28px;height:17px;transform:translateX(-50%);border:2px solid #f4d28d;border-radius:7px 7px 3px 3px;background:linear-gradient(90deg,#ad793d,#ffe6a1,#a67236);box-shadow:0 -5px 0 -2px #f4d28d}
 .ornament-back strong{display:grid;place-items:center;min-height:39px;max-width:210px;font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:1.08;font-weight:700;text-align:center;text-wrap:balance}
+.ornament-back .film-year{display:inline-block;padding:3px 11px;border:1px solid #ba8c4d;border-radius:999px;color:#6a4729;background:#fff9e5;font:700 12px Arial,Helvetica,sans-serif;letter-spacing:.06em}
 .ornament-back .film-mirror{position:relative;display:block;flex:none;width:178px;height:178px;overflow:hidden;border:6px solid #d9ad64;border-radius:50%;background:#274238;box-shadow:inset 0 0 0 3px #fff1c5,0 0 0 2px #a8733a,0 6px 12px #6e543855}
 .film-mirror::after{content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none;background:linear-gradient(130deg,#ffffff7d 0%,#ffffff16 24%,transparent 35%,transparent 80%,#09252c42 100%)}
 .film-mirror img{display:block;width:100%;height:100%;object-fit:cover}
-.ornament-back>span:last-child:not(.film-mirror){color:#765b40;font-size:12px;line-height:1.1;text-align:center}
+.ornament-back.has-note .film-mirror{width:160px;height:160px}
+.ornament-back .film-note{padding:2px 6px;border-radius:999px;color:#173b35;background:#fff8df;font-size:12px;font-weight:700;line-height:1.1;text-align:center}
 .tree-footer{display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap;margin-top:-12px}
 .progress{color:var(--muted);font-size:15px;font-weight:700}
 .random-button{min-height:48px;padding:12px 19px;border:1px solid var(--gold-soft);border-radius:999px;color:#172d2b;background:var(--gold);font:700 14px Arial,Helvetica,sans-serif;cursor:pointer;box-shadow:0 7px 24px #021a1a55;transition:transform .2s,box-shadow .2s}
@@ -52,6 +54,6 @@ footer span{color:var(--gold)}
 .image-credits a{color:var(--gold)}
 @keyframes twinkle{50%{opacity:.75;filter:brightness(1.35);transform:translate(-50%,-50%) scale(1.07)}}
 @keyframes snowdrift{to{transform:translateY(180px)}}
-@media(max-width:700px){.topbar{padding:20px}.topbar-label{font-size:10px;letter-spacing:.12em}.intro{padding:25px 17px 0}.intro-copy{font-size:16px;margin-top:18px}.tree-section{padding:17px 2px 35px}.tree-scene{width:min(100%,480px)}.ornament{--ball-size:clamp(39px,10vw,55px)}.ornament-front{font-size:23px}.ornament-front::before{top:-8px;width:15px;height:7px}.ornament-front::after{top:-14px;width:6px;height:6px}.ornament.is-open{width:196px;height:220px;transform:translate(var(--open-x-mobile),-50%)}.ornament-back{gap:4px;padding:13px 8px 10px}.ornament-back strong{min-height:31px;max-width:170px;font-size:14px}.ornament-back .film-mirror{width:142px;height:142px;border-width:5px}.ornament-back>span:last-child:not(.film-mirror){font-size:10px}.tree-footer{gap:8px;margin-top:0}.progress{width:100%;margin:0;text-align:center}.random-button{margin-top:4px}.tree-halo{top:55px;height:400px}}
-@media(max-width:390px){.topbar-label{display:none}.intro h1{font-size:45px}.ornament.is-open{width:184px;height:210px}.ornament-back .film-mirror{width:132px;height:132px}}
+@media(max-width:700px){.topbar{padding:20px}.topbar-label{font-size:10px;letter-spacing:.12em}.intro{padding:25px 17px 0}.intro-copy{font-size:16px;margin-top:18px}.tree-section{padding:17px 2px 35px}.tree-scene{width:min(100%,480px)}.ornament{--ball-size:clamp(39px,10vw,55px)}.ornament-front{font-size:23px}.ornament-front::before{top:-8px;width:15px;height:7px}.ornament-front::after{top:-14px;width:6px;height:6px}.ornament.is-open{width:196px;height:244px;transform:translate(var(--open-x-mobile),-50%)}.ornament-back{gap:4px;padding:13px 8px 10px}.ornament-back strong{min-height:31px;max-width:170px;font-size:14px}.ornament-back .film-year{padding:2px 9px;font-size:10px}.ornament-back .film-mirror{width:142px;height:142px;border-width:5px}.ornament-back.has-note .film-mirror{width:128px;height:128px}.ornament-back .film-note{font-size:11px}.tree-footer{gap:8px;margin-top:0}.progress{width:100%;margin:0;text-align:center}.random-button{margin-top:4px}.tree-halo{top:55px;height:400px}}
+@media(max-width:390px){.topbar-label{display:none}.intro h1{font-size:45px}.ornament.is-open{width:184px;height:236px}.ornament-back .film-mirror{width:132px;height:132px}.ornament-back.has-note .film-mirror{width:120px;height:120px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.snowfield,.tree-star{animation:none}.ornament,.ornament-inner,.random-button{transition:none}}
