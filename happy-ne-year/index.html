@@ -7,8 +7,8 @@
   <meta name="description" content="Небольшая новогодняя ёлка с фильмами на каждый уютный вечер. Выбери шар и открой фильм.">
   <title>Кино под ёлкой — новогодние фильмы</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=4">
-  <script src="app.js?v=4" defer></script>
+  <link rel="stylesheet" href="styles.css?v=5">
+  <script src="app.js?v=5" defer></script>
 </head>
 <body>
   <div class="snowfield" aria-hidden="true"></div>
@@ -22,7 +22,7 @@
     <section class="intro" aria-labelledby="page-title">
       <p class="eyebrow"><span class="eyebrow-line"></span> НАШ НОВОГОДНИЙ СПИСОК <span class="eyebrow-line"></span></p>
       <h1 id="page-title">Выбери шар.<br><em>Найди фильм на вечер.</em></h1>
-      <p class="intro-copy">На этой ёлке спрятаны фильмы для зимних вечеров. Нажми на игрушку — она перевернётся и покажет мини-трейлер без звука.</p>
+      <p class="intro-copy">На этой ёлке спрятаны фильмы для зимних вечеров. Нажми на игрушку — она перевернётся и покажет кадр из фильма.</p>
     </section>
 
     <section class="tree-section" aria-label="Новогодняя ёлка с фильмами">
@@ -58,10 +58,6 @@
       <div class="tree-footer">
         <p id="progress" class="progress" aria-live="polite">Открыто 0 из 15 фильмов</p>
         <button id="random-film" class="random-button" type="button">Выбрать случайный шар</button>
-        <div class="trailer-actions" hidden>
-          <a id="trailer-link" href="#" target="_blank" rel="noopener noreferrer" hidden>Смотреть трейлер со звуком ↗</a>
-          <button id="still-button" type="button" hidden>Показать кадр</button>
-        </div>
       </div>
     </section>
   </main>
